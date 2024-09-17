@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,26 +7,27 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
-
-
 <body>
     Welcome
-
-
     User<input id="username">
     pwd<input id="password">
     <button onclick="login()">Login</button>
     <button onclick="protected()">test</button>
     <button onclick="secret()">secret</button>
     <button onclick="pub()">public</button>
-
+    <div id="msg"></div>
 
     <script>
         const MY_SERVER = "http://127.0.0.1:5000"
         const login = async () => {
-            res = await axios.post(`${MY_SERVER}/login`, { username: username.value, password: password.value })
-            console.log(res.data);
-            localStorage.setItem("access_token", res.data.access_token)
+            try {
+                res = await axios.post(`${MY_SERVER}/login`, { username: username.value, password: password.value })
+                console.log(res.data);
+                msg.innerHTML = "<h1>Success"
+                localStorage.setItem("access_token", res.data.access_token)
+            } catch {
+                msg.innerHTML = "<h1>wrong credentials"
+            }
         }
 
 
