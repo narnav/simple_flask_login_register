@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+
+<body>
+    Welcome
+
+
+    User<input id="username">
+    pwd<input id="password">
+    <button onclick="login()">Login</button>
+    <button onclick="protected()">test</button>
+    <button onclick="secret()">secret</button>
+    <button onclick="pub()">public</button>
+
+
+    <script>
+        const MY_SERVER = "http://127.0.0.1:5000"
+        const login = async () => {
+            res = await axios.post(`${MY_SERVER}/login`, { username: username.value, password: password.value })
+            console.log(res.data);
+            localStorage.setItem("access_token", res.data.access_token)
+        }
+
+
+        const protected = async () => {
+            token = localStorage.getItem("access_token")
+            axios.get(`${MY_SERVER}/protected`, {
+                headers: {
+                    Authorization: `Bearer ${token}` // Include the token in the Authorization header
+                }
+            }).then(res => console.log(res.data))
+        }
+
+
+        const secret = async () => {
+            token = localStorage.getItem("access_token")
+            axios.get(`${MY_SERVER}/secret`, {
+                headers: {
+                    Authorization: `Bearer ${token}` // Include the token in the Authorization header
+                }
+            }).then(res => console.log(res.data))
+        }
+        const pub = async () => {
+            axios.get(`${MY_SERVER}/pub`).then(res => console.log(res.data))
+        }
+    </script>
+</body>
+
+
+</html>
